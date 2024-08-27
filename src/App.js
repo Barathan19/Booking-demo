@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './components/Home';
+import Booking from './components/Booking';
+import Portfolio from './components/portfolio';
 
-function App() {
+const App = () => {
+  const location = useLocation();
+  const shouldShowNavbar = location.pathname !== '/';
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {shouldShowNavbar && <Navbar />}
+      <Routes>
+        <Route path="/" element={<Portfolio />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/booking/:gameName" element={<Booking />} />
+      </Routes>
+    </>
   );
-}
+};
 
-export default App;
+const AppWrapper = () => (
+  <Router>
+    <App />
+  </Router>
+);
+
+export default AppWrapper;
